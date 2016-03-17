@@ -8,10 +8,31 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by 4 on 13.03.2016.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "profile.db";
-    private static final int DATABASE_VERSION = 1;
+
+    /*версия базы данных*/
+    public static final int DATABASE_VERSION = 1;
+
+    /*наименование базы данных*/
+    public static final String DATABASE_NAME = "DBprofile.db";
+
+    /*таблица профилей и ее поля*/
+    public static final String TABLE_PROFILE = "profile";
+    public static final String KEY_ID_PROFILE = "id";
+    public static final String KEY_NAME_PROFILE = "name_profile";
+//    public static final String KEY_NAME = "name";
+//    public static final String KEY_MAIL = "mail";
+//    public static final String KEY_NAME = "name";
+//    public static final String KEY_MAIL = "mail";
+
+    /*таблица истории вычислений и ее поля*/
+    public static final String TABLE_HISTORY = "history";
+    public static final String KEY_ID_HISTORY = "id";
+    public static final String KEY_HEIGHT_APERTURE = "height_aperture";
+    public static final String KEY_WIDTH_APERTURE = "width_aperture";
+//    public static final String KEY_
+
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
