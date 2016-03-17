@@ -24,12 +24,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //    public static final String KEY_NAME = "name";
 //    public static final String KEY_MAIL = "mail";
 
-    /*таблица истории вычислений и ее поля*/
+    /*таблица историй вычислений и ее поля*/
     public static final String TABLE_HISTORY = "history";
     public static final String KEY_ID_HISTORY = "id";
     public static final String KEY_HEIGHT_APERTURE = "height_aperture";
     public static final String KEY_WIDTH_APERTURE = "width_aperture";
-//    public static final String KEY_
+    public static final String KEY_COUNT_DOORS = "count_doors";
+    public static final String KEY_COUNT_OVERLAP = "count_overlap";
+    public static final String KEY_ID_PROFILE_IN_HISTORY = "id";
+    public static final String KEY_OVERLAP = "overlap";
+
 
     public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
