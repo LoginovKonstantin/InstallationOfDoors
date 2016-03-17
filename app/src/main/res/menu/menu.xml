@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/addProfile"
+        android:orderInCategory="100"
+        android:title="@string/addProfile"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/delProfile"
+        android:orderInCategory="100"
+        android:title="@string/delProfile"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/showProfile"
+        android:orderInCategory="100"
+        android:title="@string/showProfile"
+        app:showAsAction="never" />
+</menu>

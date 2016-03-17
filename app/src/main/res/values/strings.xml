@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">Installation of doors</string>
     <string name="btnTest">write in DB</string>
+    <string name="addProfile">Добавить профиль</string>
+    <string name="delProfile">Удалить профиль</string>
+    <string name="showProfile">Просмотреть профили</string>
+    <string name="textViewAperture">Проем</string>
+    <string name="editTextHeightAperture">Высота</string>
+    <string name="editTextWidthAperture">Ширина</string>
+    <string name="textViewCalculationDoors">Расчет дверей</string>
+    <string name="editTextCountDoors">Кол - во дверей</string>
+    <string name="editTextCountOverlap">Кол - во перехлестов</string>
+    <string name="textViewTypeProfile">Тип профиля</string>
+    <string name="buttonCalculate">Вычислить</string>
+    <string name="buttonClean">Очистить</string>
+    <string name="textViewOverlapIs">Перехлест:</string>
 </resources>
