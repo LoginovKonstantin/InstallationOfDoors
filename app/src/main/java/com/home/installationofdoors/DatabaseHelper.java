@@ -17,21 +17,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /*таблица профилей и ее поля*/
     public static final String TABLE_PROFILE = "profile";
-    public static final String KEY_ID_PROFILE = "id";
-    public static final String KEY_NAME_PROFILE = "name_profile";
-//    public static final String KEY_NAME = "name";
-//    public static final String KEY_MAIL = "mail";
-//    public static final String KEY_NAME = "name";
-//    public static final String KEY_MAIL = "mail";
+    public static final String KEY_ID_PROFILE = "_id";
+    public static final String KEY_NAME_PROFILE = "name_profile";//название профиля
+    public static final String KEY_WIDTH_PROFILE = "width_profile";//ширина профиля
+    public static final String KEY_VALUE_XVALUEX = "xvaluex";//величена вычета для получения ширины профиля для вставки
+    public static final String KEY_VALUE_ROLLERS = "value_rollers";//величина для установки роликов
+    public static final String KEY_VALUE_TOLERANCE = "value_tolerance";//величина допуска
+    public static final String KEY_JUMPER_MAGNITUDE = "jumper_magnitude";//величина перемычки
 
     /*таблица историй вычислений и ее поля*/
     public static final String TABLE_HISTORY = "history";
-    public static final String KEY_ID_HISTORY = "id";
+    public static final String KEY_ID_HISTORY = "_id";
     public static final String KEY_HEIGHT_APERTURE = "height_aperture";
     public static final String KEY_WIDTH_APERTURE = "width_aperture";
     public static final String KEY_COUNT_DOORS = "count_doors";
     public static final String KEY_COUNT_OVERLAP = "count_overlap";
-    public static final String KEY_ID_PROFILE_IN_HISTORY = "id";
+    public static final String KEY_ID_PROFILE_IN_HISTORY = "_id_profile";
     public static final String KEY_OVERLAP = "overlap";
 
 
