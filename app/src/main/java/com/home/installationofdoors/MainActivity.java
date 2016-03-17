@@ -1,5 +1,6 @@
 package com.home.installationofdoors;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,12 +54,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.buttonClean:
-                editTextHeightAperture.setText("");
-                editTextWidthAperture.setText("");
-                editTextCountDoors.setText("");
-                editTextCountOverlap.setText("");
+                cleanEditTexts();
                 break;
             case R.id.buttonCalculate:
+                cleanEditTexts();
                 /*Происходит вычисление ))*/
                 break;
         }
@@ -76,17 +75,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
-            case R.id.addProfile:
-                Log.d("myLog", "Добавить профиль");
-                break;
-            case R.id.delProfile:
-                Log.d("myLog", "Удалить профиль");
-                break;
             case R.id.showProfile:
-                Log.d("myLog", "Просмот всех профилей");
+                Intent intent = new Intent(this, ShowDBActivity.class);
+                startActivity(intent);
+                Log.d("myLog", "Просмотреть профили");
+                break;
+            case R.id.showHistory:
+                intent = new Intent(this, ShowHistory.class);
+                startActivity(intent);
+                Log.d("myLog", "Просмотреть историю");
+                break;
+            case R.id.aboutProgramm:
+                Log.d("myLog", "Просмотр 'о программе'");
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /*метод очищаяет поля ввода*/
+    public void cleanEditTexts(){
+        editTextHeightAperture.setText("");
+        editTextWidthAperture.setText("");
+        editTextCountDoors.setText("");
+        editTextCountOverlap.setText("");
     }
 
 }
