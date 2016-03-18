@@ -2,6 +2,7 @@ package com.home.installationofdoors;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,13 +25,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                      editTextCountDoors, editTextCountOverlap;
     private Button buttonClear, buttonCalculate;
     private TextView textViewOverlapIs;
+    private Spinner spinnerTypeProfile;
+    private DatabaseHelper db;
+    private SQLiteDatabase database;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         /*определены все текстовые поля*/
         editTextHeightAperture = (EditText)findViewById(R.id.editTextHeightAperture);
@@ -47,6 +52,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         /*определено текстовое поле*/
         textViewOverlapIs = (TextView)findViewById(R.id.textViewOverlapIs);
 
+        /*подключение к бд*/
+        db = new DatabaseHelper(this);
+        database = db.getWritableDatabase();
+
+        /*определен выпадающий список + создан адаптер для отображения данных из бд*/
+        spinnerTypeProfile = (Spinner)findViewById(R.id.spinnerTypeProfile);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, db.selectNamesProfile(db, database));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTypeProfile.setAdapter(adapter);
+
+        /*Отключение от бд*/
+        db.close();
+        database.close();
     }
 
     /*обработчик на кнопки*/
@@ -54,9 +72,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.buttonClean:
+                Log.d("myLog", "Очищение полей");
                 cleanEditTexts();
                 break;
             case R.id.buttonCalculate:
+                Log.d("myLog", "Вычисление");
                 cleanEditTexts();
                 /*Происходит вычисление ))*/
                 break;

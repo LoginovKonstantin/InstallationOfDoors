@@ -1,8 +1,13 @@
 package com.home.installationofdoors;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 /**
  * Created by 4 on 13.03.2016.
@@ -36,17 +41,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_OVERLAP = "overlap";
 
 
-    public DatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        Log.d("myLog", "Зашли в метод Oncreate");
+        db.execSQL("create table " + TABLE_PROFILE + "(" + KEY_ID_PROFILE + " integer primary key,"
+                + KEY_NAME_PROFILE + " text," + KEY_WIDTH_PROFILE + " float," + KEY_VALUE_XVALUEX + " float,"
+                + KEY_VALUE_ROLLERS + " float," + KEY_VALUE_TOLERANCE + " float," + KEY_JUMPER_MAGNITUDE + " float" + ")");
+        db.execSQL("create table " + TABLE_HISTORY + "(" + KEY_ID_HISTORY + " integer primary key,"
+                + KEY_HEIGHT_APERTURE + " float," + KEY_WIDTH_APERTURE + " float," + KEY_COUNT_DOORS + " float,"
+                + KEY_COUNT_OVERLAP + " float," + KEY_ID_PROFILE_IN_HISTORY + " integer," + KEY_OVERLAP + " float" + ")");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("drop table if exists" + TABLE_PROFILE);
+        db.execSQL("drop table if exists" + TABLE_HISTORY);
+        onCreate(db);
 
+    }
+
+    // Метод выборки всех записей
+    public ArrayList<String> selectAll(DatabaseHelper db, SQLiteDatabase database) {
+        database = db.getWritableDatabase();
+        Cursor cursor = database.query(db.TABLE_PROFILE, null, null, null, null, null, null);
+        ArrayList<String> arr = new ArrayList<String>();
+        if (cursor.moveToFirst()) {
+            do {
+                int idIndex = cursor.getColumnIndex(db.KEY_ID_PROFILE);
+                int nameProfileIndex = cursor.getColumnIndex(db.KEY_NAME_PROFILE);
+                int widthProfileIndex = cursor.getColumnIndex(db.KEY_WIDTH_PROFILE);
+                int xvaluexIndex = cursor.getColumnIndex(db.KEY_VALUE_XVALUEX);
+                int valueRollersIndex = cursor.getColumnIndex(db.KEY_VALUE_ROLLERS);
+                int valueTolleranceIndex = cursor.getColumnIndex(db.KEY_VALUE_TOLERANCE);
+                int jumperMagnitudeIndex = cursor.getColumnIndex(db.KEY_JUMPER_MAGNITUDE);
+
+                arr.add(new String(cursor.getString(idIndex) + " " + cursor.getString(nameProfileIndex) + " " +
+                        cursor.getString(widthProfileIndex) + " " + cursor.getString(xvaluexIndex) + " " +
+                        cursor.getString(valueRollersIndex) + " " + cursor.getString(valueTolleranceIndex) + " " +
+                        cursor.getString(jumperMagnitudeIndex)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return arr;
+    }
+
+    // Метод выборки всех наименований профилей
+    public ArrayList<String> selectNamesProfile(DatabaseHelper db, SQLiteDatabase database) {
+        database = db.getWritableDatabase();
+        Cursor cursor = database.query(db.TABLE_PROFILE, null, null, null, null, null, null);
+        ArrayList<String> arr = new ArrayList<String>();
+        if (cursor.moveToFirst()) {
+            do {
+                int nameProfileIndex = cursor.getColumnIndex(db.KEY_NAME_PROFILE);
+                arr.add(cursor.getString(nameProfileIndex));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return arr;
     }
 }
