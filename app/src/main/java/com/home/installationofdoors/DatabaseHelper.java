@@ -79,9 +79,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int valueTolleranceIndex = cursor.getColumnIndex(db.KEY_VALUE_TOLERANCE);
                 int jumperMagnitudeIndex = cursor.getColumnIndex(db.KEY_JUMPER_MAGNITUDE);
 
-                arr.add(new String(cursor.getString(idIndex) + " " + cursor.getString(nameProfileIndex) + " " +
-                        cursor.getString(widthProfileIndex) + " " + cursor.getString(xvaluexIndex) + " " +
-                        cursor.getString(valueRollersIndex) + " " + cursor.getString(valueTolleranceIndex) + " " +
+                arr.add(new String(cursor.getString(idIndex) + ") " + cursor.getString(nameProfileIndex) + "\nширина профиля: " +
+                        cursor.getString(widthProfileIndex) + "\nвеличена вычета для получения ширины профиля для вставки: " + cursor.getString(xvaluexIndex) + "\nвеличина для установки роликов: " +
+                        cursor.getString(valueRollersIndex) + "\nвеличина допуска: " + cursor.getString(valueTolleranceIndex) + "\nвеличина перемычки: " +
                         cursor.getString(jumperMagnitudeIndex)));
             } while (cursor.moveToNext());
         }

@@ -16,4 +16,6 @@
     <string name="textViewOverlapIs">Перехлест:</string>
     <string name="about">О программе</string>
     <string name="showHistory">Просмотреть историю</string>
+    <string name="buttonDelProfile">Удалить профиль</string>
+    <string name="buttonAddProfile">Добавить профиль</string>
 </resources>
