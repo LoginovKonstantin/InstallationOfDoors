@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/nameProfile"
+        android:layout_weight="1"
+        android:hint="@string/nameProfile"
+        android:textSize="15sp"
+        android:maxLength="15" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/widthProfile"
+        android:layout_weight="1"
+        android:hint="@string/widthProfile"
+        android:textSize="15sp"
+        android:maxLength="9" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/xvaluex"
+        android:layout_weight="1"
+        android:hint="@string/xvaluex"
+        android:textSize="15sp"
+        android:maxLength="9" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/valueRollers"
+        android:layout_weight="1"
+        android:hint="@string/valueRollers"
+        android:textSize="15sp"
+        android:maxLength="9" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/valueTolerance"
+        android:layout_weight="1"
+        android:hint="@string/valueTolerance"
+        android:textSize="15sp"
+        android:maxLength="9" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/jumperMagnitude"
+        android:layout_weight="1"
+        android:hint="@string/jumperMagnitude"
+        android:textSize="15sp"
+        android:maxLength="9" />
+
+</LinearLayout>
