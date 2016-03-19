@@ -9,8 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ActionMenuView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,9 +26,8 @@ import java.util.ArrayList;
 /**
  * Created by 4 on 17.03.2016.
  */
-public class ShowDBActivity extends AppCompatActivity implements View.OnClickListener {
+public class ShowDBActivity extends AppCompatActivity{
 
-    private Button buttonAddProfile, buttonDelProfile;
     private ArrayAdapter<String> dbList;
     private ListView listView;
     private DatabaseHelper db;
@@ -45,55 +48,82 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
             Log.d("myLog", s);
         }
 
-        /*определены кнопки + обработчики события*/
-        buttonAddProfile = (Button)findViewById(R.id.buttonAddProfile);
-        buttonAddProfile.setOnClickListener(this);
-        buttonDelProfile = (Button)findViewById(R.id.buttonDelProfile);
-        buttonDelProfile.setOnClickListener(this);
-
         /*определение ListView для показа базы данных*/
         listView = (ListView)findViewById(R.id.listView);
-
+        registerForContextMenu(listView);
         dbList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, db.selectAll(db, database));
         listView.setAdapter(dbList);
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-
-            case R.id.buttonAddProfile:
-                Log.d("myLog", "Добавление нового профиля");
-                View view = LayoutInflater.from(ShowDBActivity.this).inflate(R.layout.user_input, null);
-                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ShowDBActivity.this);
-                alertBuilder.setView(view);
-
-                /*определение всех компонентов управления в диалоге*/
-                final EditText nameProfile = (EditText)findViewById(R.id.nameProfile);
-                final EditText widthProfile = (EditText)findViewById(R.id.widthProfile);
-                final EditText xvaluex = (EditText)findViewById(R.id.xvaluex);
-                final EditText valueRollers = (EditText)findViewById(R.id.valueRollers);
-                final EditText valueTolerance = (EditText)findViewById(R.id.valueTolerance);
-                final EditText jumperMagnitude = (EditText)findViewById(R.id.jumperMagnitude);
-                alertBuilder.setCancelable(true).setPositiveButton("Ок", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(nameProfile.getText().toString().equals("")||widthProfile.getText().toString().equals("")||
-                                xvaluex.getText().toString().equals("")||valueRollers.getText().toString().equals("")||
-                                valueTolerance.getText().toString().equals("")||jumperMagnitude.getText().toString().equals("")){
-                            Toast.makeText(ShowDBActivity.this, "Заполните все поля!", Toast.LENGTH_SHORT);
-                        }else{
-
-                        }
-                    }
-                });
-                Dialog dialog = alertBuilder.create();
-                dialog.show();
-                break;
-
-            case R.id.buttonDelProfile:
-                Log.d("myLog", "Удаление нового профиля");
-                break;
-        }
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, 0, 0, "Добавить профиль");
+        menu.add(0, 1, 0, "Удалить профиль");
     }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        /*Добавление*/
+        if(item.getItemId() == 0){
+            createInputDialog();
+
+        }
+        /*Удаление*/
+        if (item.getItemId() == 1) {
+            // получаем инфу о пункте списка
+            AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            String elem = dbList.getItem(Integer.parseInt(String.valueOf(acmi.id)));
+            String temp = "";
+
+            for(int i = 3; i < elem.length(); i++){
+                if(elem.charAt(i) == '\n'){
+                    break;
+                }else{
+                    temp += elem.charAt(i);
+                }
+
+            }
+
+            Log.d("myLog", temp);
+            // удаляем Map из коллекции, используя позицию пункта в списке
+//            data.remove(acmi.position);
+//            // уведомляем, что данные изменились
+//            sAdapter.notifyDataSetChanged();
+            return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    public void createInputDialog(){
+        Dialog dialog = new Dialog(ShowDBActivity.this);
+        dialog.setTitle("Новый профиль");
+        dialog.setContentView(R.layout.activity_input_new_profile);
+        dialog.show();
+
+        /*инициализация всех полей и кнокпи из диалога*/
+        final EditText name_profile = (EditText)dialog.findViewById(R.id.editText);
+        final EditText width_profile = (EditText)dialog.findViewById(R.id.editText2);
+        final EditText xvaluex = (EditText)dialog.findViewById(R.id.editText3);
+        final EditText value_rollers = (EditText)dialog.findViewById(R.id.editText4);
+        final EditText value_tolerance = (EditText)dialog.findViewById(R.id.editText5);
+        final EditText jumper_magnitude = (EditText)dialog.findViewById(R.id.editText6);
+        final Button buttonOk = (Button)dialog.findViewById(R.id.buttonAddProfile);
+
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(name_profile.getText().toString().equalsIgnoreCase("")||width_profile.getText().toString().equalsIgnoreCase("")||
+                        xvaluex.getText().toString().equalsIgnoreCase("")||value_rollers.getText().toString().equalsIgnoreCase("")||
+                        value_tolerance.getText().toString().equalsIgnoreCase("")||jumper_magnitude.getText().toString().equalsIgnoreCase("")){
+                    Toast.makeText(getApplicationContext(), "Заполните все поля", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Добавляем", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+
 }

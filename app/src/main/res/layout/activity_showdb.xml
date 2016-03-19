@@ -10,26 +10,4 @@
         android:id="@+id/listView"
         android:layout_weight="0.9" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.06">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/buttonDelProfile"
-            android:id="@+id/buttonDelProfile"
-            android:layout_weight="1" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/buttonAddProfile"
-            android:id="@+id/buttonAddProfile"
-            android:layout_weight="1" />
-    </LinearLayout>
-
 </LinearLayout>
