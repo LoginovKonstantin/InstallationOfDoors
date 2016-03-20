@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_ID_PROFILE = "_id";
     public static final String KEY_NAME_PROFILE = "name_profile";//название профиля
     public static final String KEY_WIDTH_PROFILE = "width_profile";//ширина профиля
-    public static final String KEY_VALUE_XVALUEX = "xvaluex";//величена вычета для получения ширины профиля для вставки
+    public static final String KEY_VALUE_XVALUEX = "xvaluex";//величина вычета для получения ширины профиля для вставки
     public static final String KEY_VALUE_ROLLERS = "value_rollers";//величина для установки роликов
     public static final String KEY_VALUE_TOLERANCE = "value_tolerance";//величина допуска
     public static final String KEY_JUMPER_MAGNITUDE = "jumper_magnitude";//величина перемычки
@@ -65,10 +65,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Метод выборки всех записей
-    public ArrayList<String> selectAll(DatabaseHelper db, SQLiteDatabase database) {
+//    public ArrayList<String> selectAll(DatabaseHelper db, SQLiteDatabase database) {
+//        database = db.getWritableDatabase();
+//        Cursor cursor = database.query(db.TABLE_PROFILE, null, null, null, null, null, null);
+//        ArrayList<String> arr = new ArrayList<String>();
+//        if (cursor.moveToFirst()) {
+//            do {
+//                int idIndex = cursor.getColumnIndex(db.KEY_ID_PROFILE);
+//                int nameProfileIndex = cursor.getColumnIndex(db.KEY_NAME_PROFILE);
+//                int widthProfileIndex = cursor.getColumnIndex(db.KEY_WIDTH_PROFILE);
+//                int xvaluexIndex = cursor.getColumnIndex(db.KEY_VALUE_XVALUEX);
+//                int valueRollersIndex = cursor.getColumnIndex(db.KEY_VALUE_ROLLERS);
+//                int valueTolleranceIndex = cursor.getColumnIndex(db.KEY_VALUE_TOLERANCE);
+//                int jumperMagnitudeIndex = cursor.getColumnIndex(db.KEY_JUMPER_MAGNITUDE);
+//
+//                arr.add(new String(cursor.getString(idIndex) + ") " + cursor.getString(nameProfileIndex) + "\nширина профиля: " +
+//                        cursor.getString(widthProfileIndex) + "\nвеличена вычета для получения ширины профиля для вставки: " + cursor.getString(xvaluexIndex) + "\nвеличина для установки роликов: " +
+//                        cursor.getString(valueRollersIndex) + "\nвеличина допуска: " + cursor.getString(valueTolleranceIndex) + "\nвеличина перемычки: " +
+//                        cursor.getString(jumperMagnitudeIndex)));
+//            } while (cursor.moveToNext());
+//        }
+//        cursor.close();
+//        db.close();
+//        return arr;
+//    }
+    public ArrayList<Profile> selectAll(DatabaseHelper db, SQLiteDatabase database) {
         database = db.getWritableDatabase();
         Cursor cursor = database.query(db.TABLE_PROFILE, null, null, null, null, null, null);
-        ArrayList<String> arr = new ArrayList<String>();
+        ArrayList<Profile> arr = new ArrayList<Profile>();
         if (cursor.moveToFirst()) {
             do {
                 int idIndex = cursor.getColumnIndex(db.KEY_ID_PROFILE);
@@ -79,9 +103,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int valueTolleranceIndex = cursor.getColumnIndex(db.KEY_VALUE_TOLERANCE);
                 int jumperMagnitudeIndex = cursor.getColumnIndex(db.KEY_JUMPER_MAGNITUDE);
 
-                arr.add(new String(cursor.getString(idIndex) + ") " + cursor.getString(nameProfileIndex) + "\nширина профиля: " +
-                        cursor.getString(widthProfileIndex) + "\nвеличена вычета для получения ширины профиля для вставки: " + cursor.getString(xvaluexIndex) + "\nвеличина для установки роликов: " +
-                        cursor.getString(valueRollersIndex) + "\nвеличина допуска: " + cursor.getString(valueTolleranceIndex) + "\nвеличина перемычки: " +
+                arr.add(new Profile(cursor.getString(idIndex), cursor.getString(nameProfileIndex),cursor.getString(widthProfileIndex),
+                        cursor.getString(xvaluexIndex), cursor.getString(valueRollersIndex), cursor.getString(valueTolleranceIndex),
                         cursor.getString(jumperMagnitudeIndex)));
             } while (cursor.moveToNext());
         }

@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextHeightAperture, editTextWidthAperture,
@@ -28,10 +30,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Spinner spinnerTypeProfile;
     private DatabaseHelper db;
     private SQLiteDatabase database;
-    private ArrayAdapter<String> adapter;
+    public static ArrayAdapter<String> adapter;
+    public static ArrayList<String> nameList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("myLog", "зашли в oncreate в MainActivity");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -57,8 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         database = db.getWritableDatabase();
 
         /*определен выпадающий список + создан адаптер для отображения данных из бд*/
+        nameList = db.selectNamesProfile(db, database);
         spinnerTypeProfile = (Spinner)findViewById(R.id.spinnerTypeProfile);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, db.selectNamesProfile(db, database));
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTypeProfile.setAdapter(adapter);
 
