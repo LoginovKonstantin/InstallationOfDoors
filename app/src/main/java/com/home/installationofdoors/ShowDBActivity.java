@@ -34,6 +34,7 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
     private DatabaseHelper db;
     private SQLiteDatabase database;
     private Button btnAddProfile;
+    private ArrayList<Profile> profilesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
         btnAddProfile.setOnClickListener(this);
 
         /*Вывод в лог бд*/
-        ArrayList<Profile> profilesList = db.selectAll(db, database);
+        profilesList = db.selectAll(db, database);
         ArrayList<String> nameProfileList = new ArrayList<String>();
         Log.d("myLog", "Просмотр бд");
         for(Profile s : profilesList){
@@ -94,10 +95,9 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
                     numberInBd += s.charAt(i);
                 }
             }
-            char d = s.charAt(0);//Номер в БД
-            Log.d("myLog", d + "");
+            Log.d("myLog", numberInBd + "");
 
-            database.delete(DatabaseHelper.TABLE_PROFILE, "_id=" + d, null);
+            database.delete(DatabaseHelper.TABLE_PROFILE, "_id=" + numberInBd, null);
             dbList.remove(dbList.getItem((int) n));
             // уведомляем, что данные изменились
             dbList.notifyDataSetChanged();
@@ -135,11 +135,30 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(getApplicationContext(), "Заполните все поля", Toast.LENGTH_SHORT).show();
                 }else{
 
-                    Profile p = new Profile(null, name_profile.getText().toString(),
+                    int n = 0;
+                    if(dbList.getCount() > 0){
+                        String s = dbList.getItem(dbList.getCount()-1);
+                        String numberInBd = "";
+                        for(int i = 0; i < s.length(); i++){
+                            if(s.charAt(i) == ')'){
+                                break;
+                            }else{
+                                numberInBd += s.charAt(i);
+                            }
+                        }
+                        n = Integer.parseInt(numberInBd);
+                    }
+
+
+//                    int n = dbList.getCount();
+                    Log.d("myLog", n+" последний элемент");
+
+                    Profile p = new Profile(n+1, name_profile.getText().toString(),
                             width_profile.getText().toString(), xvaluex.getText().toString(),
                             value_rollers.getText().toString(), value_tolerance.getText().toString(),
                             jumper_magnitude.getText().toString());
                     database = db.getWritableDatabase();
+
                     ContentValues cv = new ContentValues();
                     cv.put(DatabaseHelper.KEY_ID_PROFILE, p.getKEY_ID_PROFILE());
                     cv.put(DatabaseHelper.KEY_NAME_PROFILE, p.getKEY_NAME_PROFILE());

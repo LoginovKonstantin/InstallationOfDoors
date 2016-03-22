@@ -4,7 +4,7 @@ package com.home.installationofdoors;
  * Created by 4 on 20.03.2016.
  */
 public class Profile {
-    private String KEY_ID_PROFILE;
+    private int KEY_ID_PROFILE;
     private String KEY_NAME_PROFILE;//название профиля
     private String KEY_WIDTH_PROFILE;//ширина профиля
     private String KEY_VALUE_XVALUEX;//величена вычета для получения ширины профиля для вставки
@@ -12,7 +12,7 @@ public class Profile {
     private String KEY_VALUE_TOLERANCE;//величина допуска
     private String KEY_JUMPER_MAGNITUDE;//величина перемычки
 
-    public Profile(String KEY_ID_PROFILE, String KEY_NAME_PROFILE, String KEY_WIDTH_PROFILE, String KEY_VALUE_XVALUEX, String KEY_VALUE_ROLLERS, String KEY_VALUE_TOLERANCE, String KEY_JUMPER_MAGNITUDE) {
+    public Profile(int KEY_ID_PROFILE, String KEY_NAME_PROFILE, String KEY_WIDTH_PROFILE, String KEY_VALUE_XVALUEX, String KEY_VALUE_ROLLERS, String KEY_VALUE_TOLERANCE, String KEY_JUMPER_MAGNITUDE) {
         this.KEY_ID_PROFILE = KEY_ID_PROFILE;
         this.KEY_NAME_PROFILE = KEY_NAME_PROFILE;
         this.KEY_WIDTH_PROFILE = KEY_WIDTH_PROFILE;
@@ -22,7 +22,7 @@ public class Profile {
         this.KEY_JUMPER_MAGNITUDE = KEY_JUMPER_MAGNITUDE;
     }
 
-    public String getKEY_ID_PROFILE() {
+    public int getKEY_ID_PROFILE() {
         return KEY_ID_PROFILE;
     }
 

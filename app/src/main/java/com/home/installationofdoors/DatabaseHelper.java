@@ -103,7 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int valueTolleranceIndex = cursor.getColumnIndex(db.KEY_VALUE_TOLERANCE);
                 int jumperMagnitudeIndex = cursor.getColumnIndex(db.KEY_JUMPER_MAGNITUDE);
 
-                arr.add(new Profile(cursor.getString(idIndex), cursor.getString(nameProfileIndex),cursor.getString(widthProfileIndex),
+                arr.add(new Profile(cursor.getInt(idIndex), cursor.getString(nameProfileIndex),cursor.getString(widthProfileIndex),
                         cursor.getString(xvaluexIndex), cursor.getString(valueRollersIndex), cursor.getString(valueTolleranceIndex),
                         cursor.getString(jumperMagnitudeIndex)));
             } while (cursor.moveToNext());
@@ -111,6 +111,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return arr;
+    }
+
+    /*исправлять тут*/
+    public int getLastId(DatabaseHelper db, SQLiteDatabase database){
+        int n = 1;
+        database = db.getWritableDatabase();
+        Cursor cursor = database.query(db.TABLE_PROFILE, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            n = 0;
+            do{
+               n = cursor.getColumnIndex(db.KEY_ID_PROFILE);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return n;
     }
 
     // Метод выборки всех наименований профилей
