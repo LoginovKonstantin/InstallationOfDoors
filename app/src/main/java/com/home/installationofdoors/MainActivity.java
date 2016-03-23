@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("myLog", "Высота двери в профиле " + height);
                 Log.d("myLog", "Ширина вставки " + insertWidth);
                 Log.d("myLog", "Высота вставки " + insertHeight);
+                cleanEditTexts();
                 break;
         }
     }
