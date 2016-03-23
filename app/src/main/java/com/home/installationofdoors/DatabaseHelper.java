@@ -64,31 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    // Метод выборки всех записей
-//    public ArrayList<String> selectAll(DatabaseHelper db, SQLiteDatabase database) {
-//        database = db.getWritableDatabase();
-//        Cursor cursor = database.query(db.TABLE_PROFILE, null, null, null, null, null, null);
-//        ArrayList<String> arr = new ArrayList<String>();
-//        if (cursor.moveToFirst()) {
-//            do {
-//                int idIndex = cursor.getColumnIndex(db.KEY_ID_PROFILE);
-//                int nameProfileIndex = cursor.getColumnIndex(db.KEY_NAME_PROFILE);
-//                int widthProfileIndex = cursor.getColumnIndex(db.KEY_WIDTH_PROFILE);
-//                int xvaluexIndex = cursor.getColumnIndex(db.KEY_VALUE_XVALUEX);
-//                int valueRollersIndex = cursor.getColumnIndex(db.KEY_VALUE_ROLLERS);
-//                int valueTolleranceIndex = cursor.getColumnIndex(db.KEY_VALUE_TOLERANCE);
-//                int jumperMagnitudeIndex = cursor.getColumnIndex(db.KEY_JUMPER_MAGNITUDE);
-//
-//                arr.add(new String(cursor.getString(idIndex) + ") " + cursor.getString(nameProfileIndex) + "\nширина профиля: " +
-//                        cursor.getString(widthProfileIndex) + "\nвеличена вычета для получения ширины профиля для вставки: " + cursor.getString(xvaluexIndex) + "\nвеличина для установки роликов: " +
-//                        cursor.getString(valueRollersIndex) + "\nвеличина допуска: " + cursor.getString(valueTolleranceIndex) + "\nвеличина перемычки: " +
-//                        cursor.getString(jumperMagnitudeIndex)));
-//            } while (cursor.moveToNext());
-//        }
-//        cursor.close();
-//        db.close();
-//        return arr;
-//    }
+    /*метод выборки всех значений*/
     public ArrayList<Profile> selectAll(DatabaseHelper db, SQLiteDatabase database) {
         database = db.getWritableDatabase();
         Cursor cursor = database.query(db.TABLE_PROFILE, null, null, null, null, null, null);
@@ -145,4 +121,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return arr;
     }
+
+    /*Метод выборки ширины профиля по имени*/
+    public double getWidth(String profileName, DatabaseHelper db){
+        SQLiteDatabase database = db.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT " + db.KEY_WIDTH_PROFILE + " FROM "
+                + db.TABLE_PROFILE + " WHERE TRIM(" + db.KEY_NAME_PROFILE + ") = '" + profileName.trim() + "'", null);
+        cursor.moveToFirst();
+        double width = cursor.getDouble(cursor.getColumnIndex(db.KEY_WIDTH_PROFILE));
+        cursor.close();
+        database.close();
+        return width;
+    }
+
+    /*Метод выборки величины для установки роликов по имени*/
+    public double getValueRoller(String profileName, DatabaseHelper db){
+        SQLiteDatabase database = db.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT " + db.KEY_VALUE_ROLLERS + " FROM "
+                + db.TABLE_PROFILE + " WHERE TRIM(" + db.KEY_NAME_PROFILE + ") = '" + profileName.trim() + "'", null);
+        cursor.moveToFirst();
+        double valueRoller = cursor.getDouble(cursor.getColumnIndex(db.KEY_VALUE_ROLLERS));
+        cursor.close();
+        database.close();
+        return valueRoller;
+    }
+
+    /*Метод выборки величины вычета для получения ширины профиля для вставки по имени*/
+    public double getValueX(String profileName, DatabaseHelper db){
+        SQLiteDatabase database = db.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT " + db.KEY_VALUE_XVALUEX + " FROM "
+                + db.TABLE_PROFILE + " WHERE TRIM(" + db.KEY_NAME_PROFILE + ") = '" + profileName.trim() + "'", null);
+        cursor.moveToFirst();
+        double valueX = cursor.getDouble(cursor.getColumnIndex(db.KEY_VALUE_XVALUEX));
+        cursor.close();
+        database.close();
+        return valueX;
+    }
+
+    /*Метод выборки величина допуска по имени*/
+    public double getTolerance(String profileName, DatabaseHelper db){
+        SQLiteDatabase database = db.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT " + db.KEY_VALUE_TOLERANCE + " FROM "
+                + db.TABLE_PROFILE + " WHERE TRIM(" + db.KEY_NAME_PROFILE + ") = '" + profileName.trim() + "'", null);
+        cursor.moveToFirst();
+        double tolerance = cursor.getDouble(cursor.getColumnIndex(db.KEY_VALUE_TOLERANCE));
+        cursor.close();
+        database.close();
+        return tolerance;
+    }
+
+
 }

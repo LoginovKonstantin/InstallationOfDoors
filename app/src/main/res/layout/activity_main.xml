@@ -121,14 +121,28 @@
                 android:spinnerMode="dropdown"
                 android:layout_weight="1" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/textViewOverlapIs"
-                android:id="@+id/textViewOverlapIs"
-                android:layout_column="1"
-                android:textSize="15sp"
-                android:layout_weight="1" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_column="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textViewOverlapIs"
+                    android:id="@+id/textView"
+                    android:textSize="15sp"
+                    android:layout_weight="0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/widthProfile"
+                    android:layout_weight="0"
+                    android:layout_marginLeft="8sp" />
+
+            </LinearLayout>
 
         </TableRow>
 

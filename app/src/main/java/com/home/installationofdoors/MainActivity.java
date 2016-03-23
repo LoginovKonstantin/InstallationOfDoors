@@ -21,12 +21,12 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    private EditText editTextHeightAperture, editTextWidthAperture,
+    public EditText editTextHeightAperture, editTextWidthAperture,
                      editTextCountDoors, editTextCountOverlap;
     private Button buttonClear, buttonCalculate;
-    private TextView textViewOverlapIs;
+    private TextView widthProfile;
     private Spinner spinnerTypeProfile;
     private DatabaseHelper db;
     private SQLiteDatabase database;
@@ -53,19 +53,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonClear = (Button)findViewById(R.id.buttonClean);
         buttonClear.setOnClickListener(this);
 
-        /*определено текстовое поле*/
-        textViewOverlapIs = (TextView)findViewById(R.id.textViewOverlapIs);
+        /*определен лаейбл*/
+        widthProfile = (TextView)findViewById(R.id.widthProfile);
 
         /*подключение к бд*/
         db = new DatabaseHelper(this);
         database = db.getWritableDatabase();
 
-        /*определен выпадающий список + создан адаптер для отображения данных из бд*/
+        /*определен выпадающий список + создан адаптер для отображения данных из бд + опеределен обработчик*/
         nameList = db.selectNamesProfile(db, database);
         spinnerTypeProfile = (Spinner)findViewById(R.id.spinnerTypeProfile);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTypeProfile.setAdapter(adapter);
+        spinnerTypeProfile.setOnItemSelectedListener(this);
 
         /*Отключение от бд*/
         db.close();
@@ -77,13 +78,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.buttonClean:
-                Log.d("myLog", "Очищение полей");
                 cleanEditTexts();
                 break;
             case R.id.buttonCalculate:
                 Log.d("myLog", "Вычисление");
-                cleanEditTexts();
-                /*Происходит вычисление ))*/
+//                cleanEditTexts();
+                /*Проверки*/
+                if(editTextCountDoors.getText().toString().length() < 1
+                        || editTextCountOverlap.getText().toString().length() < 1
+                        || editTextWidthAperture.getText().toString().length() < 1
+                        || editTextHeightAperture.getText().toString().length() < 1){
+                    Toast.makeText(this, "Заполните все поля", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(adapter.isEmpty()){
+                    Toast.makeText(this, "Необходимо добавить профиль", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                /*вычисления*/
+                Calculating calc = new Calculating();
+                double width = calc.calcWidthDoor(editTextWidthAperture.getText().toString(), widthProfile.getText().toString(),
+                                                    editTextCountOverlap.getText().toString(), editTextCountDoors.getText().toString());
+                double height = calc.calcHeightDoor(editTextHeightAperture.getText().toString(),
+                        db.getValueRoller(spinnerTypeProfile.getSelectedItem().toString(), db));
+                double insertWidth = calc.calcInsertWidth(width, widthProfile.getText().toString(),
+                        db.getValueX(spinnerTypeProfile.getSelectedItem().toString(), db));
+                double insertHeight = calc.calcInsertHeight(height, db.getTolerance(spinnerTypeProfile.getSelectedItem().toString(), db));
+                Log.d("myLog", "Ширина двери в профиле " + width);
+                Log.d("myLog", "Высота двери в профиле " + height);
+                Log.d("myLog", "Ширина вставки " + insertWidth);
+                Log.d("myLog", "Высота вставки " + insertHeight);
                 break;
         }
     }
@@ -125,4 +149,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editTextCountOverlap.setText("");
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String nameProfile = parent.getItemAtPosition(position).toString();
+        double width = db.getWidth(nameProfile, db);
+        widthProfile.setText(width + "");
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        if(parent.getSelectedItem() == null){
+            widthProfile.setText("");
+        }
+    }
 }

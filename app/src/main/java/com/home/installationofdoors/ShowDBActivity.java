@@ -135,49 +135,52 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(getApplicationContext(), "Заполните все поля", Toast.LENGTH_SHORT).show();
                 }else{
 
-                    int n = 0;
-                    if(dbList.getCount() > 0){
-                        String s = dbList.getItem(dbList.getCount()-1);
-                        String numberInBd = "";
-                        for(int i = 0; i < s.length(); i++){
-                            if(s.charAt(i) == ')'){
-                                break;
-                            }else{
-                                numberInBd += s.charAt(i);
+                    ArrayList<String> names = db.selectNamesProfile(db, database);
+                    if(names.contains(name_profile.getText().toString())){
+                        Toast.makeText(getApplicationContext(), "Такой профиль существует", Toast.LENGTH_SHORT).show();
+                        name_profile.setText("");
+                    }else{
+                        int n = 0;
+                        if(dbList.getCount() > 0){
+                            String s = dbList.getItem(dbList.getCount()-1);
+                            String numberInBd = "";
+                            for(int i = 0; i < s.length(); i++){
+                                if(s.charAt(i) == ')'){
+                                    break;
+                                }else{
+                                    numberInBd += s.charAt(i);
+                                }
                             }
+                            n = Integer.parseInt(numberInBd);
                         }
-                        n = Integer.parseInt(numberInBd);
+
+
+                        Profile p = new Profile(n+1, name_profile.getText().toString(),
+                                width_profile.getText().toString(), xvaluex.getText().toString(),
+                                value_rollers.getText().toString(), value_tolerance.getText().toString(),
+                                jumper_magnitude.getText().toString());
+                        database = db.getWritableDatabase();
+
+                        ContentValues cv = new ContentValues();
+                        cv.put(DatabaseHelper.KEY_ID_PROFILE, p.getKEY_ID_PROFILE());
+                        cv.put(DatabaseHelper.KEY_NAME_PROFILE, p.getKEY_NAME_PROFILE());
+                        cv.put(DatabaseHelper.KEY_WIDTH_PROFILE, p.getKEY_WIDTH_PROFILE());
+                        cv.put(DatabaseHelper.KEY_VALUE_XVALUEX, p.getKEY_VALUE_XVALUEX());
+                        cv.put(DatabaseHelper.KEY_VALUE_ROLLERS, p.getKEY_VALUE_ROLLERS());
+                        cv.put(DatabaseHelper.KEY_VALUE_TOLERANCE, p.getKEY_VALUE_TOLERANCE());
+                        cv.put(DatabaseHelper.KEY_JUMPER_MAGNITUDE, p.getKEY_JUMPER_MAGNITUDE());
+                        database.insert(DatabaseHelper.TABLE_PROFILE, null, cv);
+
+                        dbList.add(p.toString());
+                        dbList.notifyDataSetChanged();
+
+                        MainActivity.nameList.add(p.getKEY_NAME_PROFILE());
+                        MainActivity.adapter.notifyDataSetChanged();
+
+                        database.close();
+                        Toast.makeText(getApplicationContext(), "Профиль добавлен", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
-
-
-//                    int n = dbList.getCount();
-                    Log.d("myLog", n+" последний элемент");
-
-                    Profile p = new Profile(n+1, name_profile.getText().toString(),
-                            width_profile.getText().toString(), xvaluex.getText().toString(),
-                            value_rollers.getText().toString(), value_tolerance.getText().toString(),
-                            jumper_magnitude.getText().toString());
-                    database = db.getWritableDatabase();
-
-                    ContentValues cv = new ContentValues();
-                    cv.put(DatabaseHelper.KEY_ID_PROFILE, p.getKEY_ID_PROFILE());
-                    cv.put(DatabaseHelper.KEY_NAME_PROFILE, p.getKEY_NAME_PROFILE());
-                    cv.put(DatabaseHelper.KEY_WIDTH_PROFILE, p.getKEY_WIDTH_PROFILE());
-                    cv.put(DatabaseHelper.KEY_VALUE_XVALUEX, p.getKEY_VALUE_XVALUEX());
-                    cv.put(DatabaseHelper.KEY_VALUE_ROLLERS, p.getKEY_VALUE_ROLLERS());
-                    cv.put(DatabaseHelper.KEY_VALUE_TOLERANCE, p.getKEY_VALUE_TOLERANCE());
-                    cv.put(DatabaseHelper.KEY_JUMPER_MAGNITUDE, p.getKEY_JUMPER_MAGNITUDE());
-                    database.insert(DatabaseHelper.TABLE_PROFILE, null, cv);
-
-                    dbList.add(p.toString());
-                    dbList.notifyDataSetChanged();
-
-                    MainActivity.nameList.add(p.getKEY_NAME_PROFILE());
-                    MainActivity.adapter.notifyDataSetChanged();
-
-                    database.close();
-                    Toast.makeText(getApplicationContext(), "Профиль добавлен", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
                 }
             }
         });
