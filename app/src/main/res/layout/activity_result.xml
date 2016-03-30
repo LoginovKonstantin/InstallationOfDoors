@@ -27,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Высота двери:"
+                android:text="@string/HeightDoor"
                 android:id="@+id/textViewHeightDoor"
                 android:textSize="15sp"
                 android:layout_weight="1" />
@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Высота вставки:"
+                android:text="@string/HeightInst"
                 android:id="@+id/textViewInstHeight"
                 android:layout_column="1"
                 android:textSize="15sp"
@@ -51,7 +51,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ширина двери:"
+                android:text="@string/WidthDoor"
                 android:id="@+id/textViewWidthDoor"
                 android:textSize="15sp"
                 android:layout_weight="1"
@@ -60,7 +60,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ширина вставки:"
+                android:text="@string/WidthInst"
                 android:id="@+id/textViewInstWidth"
                 android:layout_column="1"
                 android:textSize="15sp"
@@ -77,12 +77,13 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:id="@+id/radio_group">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Вид двери"
+                android:text="@string/ViewDoor"
                 android:id="@+id/textView3"
                 android:layout_marginTop="15sp"
                 android:textSize="20sp" />
@@ -90,56 +91,56 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Без расстекловки"
-                android:id="@+id/radioButton"
+                android:text="@string/WithOutGlass"
+                android:id="@+id/radioButtonWithoutGlass"
                 android:checked="false"
                 android:layout_marginTop="10sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Свободная"
-                android:id="@+id/radioButton2"
+                android:text="@string/free"
+                android:id="@+id/radioButtonFree"
                 android:checked="false"
                 android:layout_marginTop="5sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1/2-1/2"
-                android:id="@+id/radioButton3"
+                android:text="@string/half"
+                android:id="@+id/radioButtonHalf"
                 android:checked="false"
                 android:layout_marginTop="5sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1/3-1/3-1/3"
-                android:id="@+id/radioButton4"
+                android:text="@string/OneThird"
+                android:id="@+id/radioButtonOneThird"
                 android:checked="false"
                 android:layout_marginTop="5sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1/4-1/2-1/4"
-                android:id="@+id/radioButton5"
+                android:text="@string/OneQuarter"
+                android:id="@+id/radioButtonOneQuarter"
                 android:checked="false"
                 android:layout_marginTop="5sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1/4-1/4-1/4-1/4"
-                android:id="@+id/radioButton6"
+                android:text="@string/OneQuarter2"
+                android:id="@+id/radioButtonOneQuarter2"
                 android:checked="false"
                 android:layout_marginTop="5sp" />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1/5-1/5-1/5-1/5-1/5"
-                android:id="@+id/radioButton7"
+                android:text="@string/OneFifth"
+                android:id="@+id/radioButtonOneFifth"
                 android:checked="false"
                 android:layout_marginTop="5sp" />
 

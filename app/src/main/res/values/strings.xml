@@ -26,4 +26,16 @@
     <string name="jumperMagnitude">Величина перемычки</string>
     <string name="buttonOk">Ок</string>
     <string name="Result">Результаты</string>
+    <string name="HeightDoor">Высота двери:</string>
+    <string name="HeightInst">Высота вставки:</string>
+    <string name="WidthDoor">Ширина двери:</string>
+    <string name="WidthInst">Ширина вставки:</string>
+    <string name="ViewDoor">Вид двери</string>
+    <string name="WithOutGlass">Без расстекловки</string>
+    <string name="free">Свободная</string>
+    <string name="half">1/2-1/2</string>
+    <string name="OneThird">1/3-1/3-1/3</string>
+    <string name="OneQuarter">1/4-1/2-1/4</string>
+    <string name="OneQuarter2">1/4-1/4-1/4-1/4</string>
+    <string name="OneFifth">1/5-1/5-1/5-1/5-1/5</string>
 </resources>
