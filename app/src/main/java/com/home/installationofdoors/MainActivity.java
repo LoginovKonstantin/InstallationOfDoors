@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SQLiteDatabase database;
     public static ArrayAdapter<String> adapter;
     public static ArrayList<String> nameList;
+    public static Calculating calc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.buttonCalculate:
                 Log.d("myLog", "Вычисление");
-//                cleanEditTexts();
                 /*Проверки*/
                 if(editTextCountDoors.getText().toString().length() < 1
                         || editTextCountOverlap.getText().toString().length() < 1
@@ -96,25 +96,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     return;
                 }
                 /*вычисления*/
-                Calculating calc = new Calculating();
+                calc = new Calculating();
 
-                double width = calc.calcWidthDoor(editTextWidthAperture.getText().toString(), widthProfile.getText().toString(),
-                                                    editTextCountOverlap.getText().toString(), editTextCountDoors.getText().toString());
+                calc.setWidth(calc.calcWidthDoor(editTextWidthAperture.getText().toString(), widthProfile.getText().toString(),
+                        editTextCountOverlap.getText().toString(), editTextCountDoors.getText().toString()));
 
-                double height = calc.calcHeightDoor(editTextHeightAperture.getText().toString(),
-                        db.getValueRoller(spinnerTypeProfile.getSelectedItem().toString(), db));
+                calc.setHeight(calc.calcHeightDoor(editTextHeightAperture.getText().toString(),
+                        db.getValueRoller(spinnerTypeProfile.getSelectedItem().toString(), db)));
 
-                double insertWidth = calc.calcInsertWidth(width, widthProfile.getText().toString(),
+                calc.setInsertWidth(calc.calcInsertWidth(calc.getWidth(), widthProfile.getText().toString(),
                         db.getValueX(spinnerTypeProfile.getSelectedItem().toString(), db),
-                        editTextCountDoors.getText().toString());
+                        editTextCountDoors.getText().toString()));
 
-                double insertHeight = calc.calcInsertHeight(height, db.getTolerance(spinnerTypeProfile.getSelectedItem().toString(), db));
+                calc.setInsertHeight(calc.calcInsertHeight(calc.getHeight(), db.getTolerance(spinnerTypeProfile.getSelectedItem().toString(), db)));
 
-                Log.d("myLog", "Ширина двери в профиле " + width);
-                Log.d("myLog", "Высота двери в профиле " + height);
-                Log.d("myLog", "Ширина вставки " + insertWidth);
-                Log.d("myLog", "Высота вставки " + insertHeight);
+                Log.d("myLog1", "Ширина двери в профиле " + calc.getWidth());
+                Log.d("myLog1", "Высота двери в профиле " + calc.getHeight());
+                Log.d("myLog1", "Ширина вставки " + calc.getInsertWidth());
+                Log.d("myLog1", "Высота вставки " + calc.getInsertHeight());
+
+                Intent intent = new Intent(this, ResultActivity.class);
+                startActivity(intent);
                 cleanEditTexts();
+
                 break;
         }
     }

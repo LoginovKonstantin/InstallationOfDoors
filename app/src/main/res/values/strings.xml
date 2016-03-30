@@ -25,4 +25,5 @@
     <string name="valueTolerance">Величина допуска</string>
     <string name="jumperMagnitude">Величина перемычки</string>
     <string name="buttonOk">Ок</string>
+    <string name="Result">Результаты</string>
 </resources>
