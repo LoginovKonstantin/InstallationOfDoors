@@ -72,7 +72,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/WithOutGlass"
                 android:id="@+id/radioButtonWithoutGlass"
-                android:checked="false"
+                android:checked="true"
                 android:layout_marginTop="10sp" />
 
             <RadioButton
@@ -151,7 +151,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginTop="10sp"></LinearLayout>
+            android:layout_marginTop="10sp"
+            android:id="@+id/imageLayout">
+
+            <ImageView
+                android:src="@drawable/image1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/imageView"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp" />
+        </LinearLayout>
 
     </LinearLayout>
 
