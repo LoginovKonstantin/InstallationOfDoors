@@ -48,32 +48,22 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
-                    case R.id.radioButtonWithoutGlass:
-                        Log.d("myTag", "Без расстекловки");
-                        imageView.setImageResource(R.drawable.image1);
-                        break;
                     case R.id.radioButtonFree:
-                        Log.d("myTag", "Свободная");
                         imageView.setImageResource(R.drawable.image2);
                         break;
                     case R.id.radioButtonHalf:
-                        Log.d("myTag", "imagewithoutglass/2-imagewithoutglass/2");
                         imageView.setImageResource(R.drawable.image3);
                         break;
                     case R.id.radioButtonOneThird:
-                        Log.d("myTag", "imagewithoutglass/3-imagewithoutglass/3-imagewithoutglass/3");
                         imageView.setImageResource(R.drawable.image4);
                         break;
                     case R.id.radioButtonOneQuarter:
-                        Log.d("myTag", "imagewithoutglass/4-imagewithoutglass/2-imagewithoutglass/4");
                         imageView.setImageResource(R.drawable.image5);
                         break;
                     case R.id.radioButtonOneQuarter2:
-                        Log.d("myTag", "imagewithoutglass/4-imagewithoutglass/4-imagewithoutglass/4-imagewithoutglass/4");
                         imageView.setImageResource(R.drawable.image6);
                         break;
                     case R.id.radioButtonOneFifth:
-                        Log.d("myTag", "imagewithoutglass/5-imagewithoutglass/5-imagewithoutglass/5-imagewithoutglass/5-imagewithoutglass/5");
                         imageView.setImageResource(R.drawable.image7);
                         break;
                 }
