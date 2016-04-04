@@ -38,5 +38,6 @@
     <string name="OneQuarter">1/4-1/2-1/4</string>
     <string name="OneQuarter2">1/4-1/4-1/4-1/4</string>
     <string name="OneFifth">1/5-1/5-1/5-1/5-1/5</string>
-    <string name="info">Если в качестве детали используется зеркало, то размер вставки уменьшается на 2мм.</string>
+    <!--<string name="info">Если в качестве детали используется зеркало, то высота вставки уменьшится на 2мм.</string>-->
+    <string name="info">При использовании в качестве детали зеркала, высота вставки уменьшится на 2мм.</string>
 </resources>
