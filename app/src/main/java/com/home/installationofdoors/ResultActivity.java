@@ -90,7 +90,7 @@ public class ResultActivity extends AppCompatActivity {
                         break;
 
                     case R.id.radioButtonOneThird:
-                        value = Math.rint(100.0 * ((MainActivity.calc.getInsertHeight() - 2) / 3)) / 100.0;
+                        value = Math.rint(100.0 * ((MainActivity.calc.getInsertHeight() - 4) / 3)) / 100.0;
                         imageView.setImageResource(R.drawable.image4);
                         textViews = new TextView[]{
                                 new TextView(getApplicationContext()),
@@ -101,8 +101,8 @@ public class ResultActivity extends AppCompatActivity {
                         break;
 
                     case R.id.radioButtonOneQuarter:
-                        value = Math.rint(100.0 * ((MainActivity.calc.getInsertHeight() - 2) / 4)) / 100.0;
-                        double valueTemp = Math.rint(100.0 * ((MainActivity.calc.getInsertHeight() - 2) / 2)) / 100.0;
+                        value = Math.rint(100.0 * ((MainActivity.calc.getInsertHeight() - 4) / 4)) / 100.0;
+                        double valueTemp = Math.rint(100.0 * ((MainActivity.calc.getInsertHeight() - 4) / 2)) / 100.0;
                         imageView.setImageResource(R.drawable.image5);
 
                         TextView textViewOneQuarter1 = new TextView(getApplicationContext());
@@ -130,7 +130,7 @@ public class ResultActivity extends AppCompatActivity {
                         break;
 
                     case R.id.radioButtonOneQuarter2:
-                        value = Math.rint(100.0 * ((MainActivity.calc.getInsertHeight() - 2) / 4)) / 100.0;
+                        value = Math.rint(100.0 * ((MainActivity.calc.getInsertHeight() - 6) / 4)) / 100.0;
                         imageView.setImageResource(R.drawable.image6);
                         textViews = new TextView[]{
                                 new TextView(getApplicationContext()),
@@ -142,7 +142,7 @@ public class ResultActivity extends AppCompatActivity {
                         break;
 
                     case R.id.radioButtonOneFifth:
-                        value = Math.rint(100.0 * ((MainActivity.calc.getInsertHeight() - 2) / 5)) / 100.0;
+                        value = Math.rint(100.0 * ((MainActivity.calc.getInsertHeight() - 8) / 5)) / 100.0;
                         imageView.setImageResource(R.drawable.image7);
                         textViews = new TextView[]{
                                 new TextView(getApplicationContext()),
