@@ -48,10 +48,9 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
         btnAddProfile = (Button)findViewById(R.id.buttonAddProfile);
         btnAddProfile.setOnClickListener(this);
 
-        /*Вывод в лог бд*/
+        /*запись в массив*/
         profilesList = db.selectAll(db, database);
         ArrayList<String> nameProfileList = new ArrayList<String>();
-        Log.d("myLog", "Просмотр бд");
         for(Profile s : profilesList){
             nameProfileList.add(s.toString());
         }
@@ -79,8 +78,7 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
 
         /*Удаление*/
         if (item.getItemId() == 1) {
-            // получаем инфу о пункте списка
-
+            // получаем информацию о пункте списка
             AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
             database = db.getWritableDatabase();

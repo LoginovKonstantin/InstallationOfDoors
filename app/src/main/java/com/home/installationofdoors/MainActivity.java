@@ -1,5 +1,6 @@
 package com.home.installationofdoors;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,7 +20,9 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -115,12 +118,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("myLog1", "Ширина вставки " + calc.getInsertWidth());
                 Log.d("myLog1", "Высота вставки " + calc.getInsertHeight());
 
+                writeHistoryInBD();
+
                 Intent intent = new Intent(this, ResultActivity.class);
                 startActivity(intent);
                 cleanEditTexts();
 
                 break;
         }
+    }
+
+    /*запись истории в базу*/
+    private void writeHistoryInBD() {
+        /*определение даты и времени в указаном формате*/
+        Date d = new Date();
+        SimpleDateFormat format1 = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+
+        database = db.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(DatabaseHelper.KEY_OPENING_HEIGHT, editTextHeightAperture.getText().toString());
+        cv.put(DatabaseHelper.KEY_OPENING_WIDTH, editTextWidthAperture.getText().toString());
+        cv.put(DatabaseHelper.KEY_HEIGHT_APERTURE, calc.getInsertHeight());
+        cv.put(DatabaseHelper.KEY_WIDTH_APERTURE, calc.getInsertWidth());
+        cv.put(DatabaseHelper.KEY_COUNT_DOORS, editTextCountDoors.getText().toString());
+        cv.put(DatabaseHelper.KEY_COUNT_OVERLAP, editTextCountOverlap.getText().toString());
+        cv.put(DatabaseHelper.KEY_NAME_PROFILE_IN_HISTORY, spinnerTypeProfile.getSelectedItem().toString());
+        cv.put(DatabaseHelper.KEY_DATE, format1.format(d));
+
+        database.insert(DatabaseHelper.TABLE_HISTORY, null, cv);
+        cv.clear();
+        database.close();
     }
 
     /*создание меню из menu/menu.xml*/

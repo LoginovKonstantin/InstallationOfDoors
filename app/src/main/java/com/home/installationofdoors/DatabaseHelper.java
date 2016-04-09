@@ -33,12 +33,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /*таблица историй вычислений и ее поля*/
     public static final String TABLE_HISTORY = "history";
     public static final String KEY_ID_HISTORY = "_id";
+    public static final String KEY_OPENING_HEIGHT = "opening_height";
+    public static final String KEY_OPENING_WIDTH = "opening_width";
     public static final String KEY_HEIGHT_APERTURE = "height_aperture";
     public static final String KEY_WIDTH_APERTURE = "width_aperture";
     public static final String KEY_COUNT_DOORS = "count_doors";
     public static final String KEY_COUNT_OVERLAP = "count_overlap";
-    public static final String KEY_ID_PROFILE_IN_HISTORY = "_id_profile";
-    public static final String KEY_OVERLAP = "overlap";
+    public static final String KEY_NAME_PROFILE_IN_HISTORY = "name_profile";
+    public static final String KEY_DATE = "date";
 
 
     public DatabaseHelper(Context context) {
@@ -52,8 +54,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + KEY_NAME_PROFILE + " text," + KEY_WIDTH_PROFILE + " float," + KEY_VALUE_XVALUEX + " float,"
                 + KEY_VALUE_ROLLERS + " float," + KEY_VALUE_TOLERANCE + " float," + KEY_JUMPER_MAGNITUDE + " float" + ")");
         db.execSQL("create table " + TABLE_HISTORY + "(" + KEY_ID_HISTORY + " integer primary key,"
-                + KEY_HEIGHT_APERTURE + " float," + KEY_WIDTH_APERTURE + " float," + KEY_COUNT_DOORS + " float,"
-                + KEY_COUNT_OVERLAP + " float," + KEY_ID_PROFILE_IN_HISTORY + " integer," + KEY_OVERLAP + " float" + ")");
+                + KEY_HEIGHT_APERTURE + " float," + KEY_OPENING_HEIGHT + " float," + KEY_OPENING_WIDTH + " float," + KEY_WIDTH_APERTURE + " float,"
+                + KEY_COUNT_DOORS + " float," + KEY_COUNT_OVERLAP + " float," + KEY_NAME_PROFILE_IN_HISTORY + " string," + KEY_DATE + " text)");
     }
 
     @Override
@@ -64,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    /*метод выборки всех значений*/
+    /*метод выборки всех значений из таблицы профили*/
     public ArrayList<Profile> selectAll(DatabaseHelper db, SQLiteDatabase database) {
         database = db.getWritableDatabase();
         Cursor cursor = database.query(db.TABLE_PROFILE, null, null, null, null, null, null);
@@ -89,21 +91,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return arr;
     }
 
-    /*исправлять тут*/
-    public int getLastId(DatabaseHelper db, SQLiteDatabase database){
-        int n = 1;
+    /*метод выборки всех значений из таблицы истории*/
+    public ArrayList<String> selectAllHistory(DatabaseHelper db, SQLiteDatabase database) {
         database = db.getWritableDatabase();
-        Cursor cursor = database.query(db.TABLE_PROFILE, null, null, null, null, null, null);
-
+        Cursor cursor = database.query(db.TABLE_HISTORY, null, null, null, null, null, null);
+        ArrayList<String> arr = new ArrayList<String>();
         if (cursor.moveToFirst()) {
-            n = 0;
-            do{
-               n = cursor.getColumnIndex(db.KEY_ID_PROFILE);
-            }while (cursor.moveToNext());
+            do {
+//                int idHistory = cursor.getColumnIndex(db.KEY_ID_HISTORY);
+                int openingHeight = cursor.getColumnIndex(db.KEY_OPENING_HEIGHT);
+                int openingWidth = cursor.getColumnIndex(db.KEY_OPENING_WIDTH);
+                int heightAperture = cursor.getColumnIndex(db.KEY_HEIGHT_APERTURE);
+                int widthAperture = cursor.getColumnIndex(db.KEY_WIDTH_APERTURE);
+                int countDoors = cursor.getColumnIndex(db.KEY_COUNT_DOORS);
+                int countOverlap = cursor.getColumnIndex(db.KEY_COUNT_OVERLAP);
+                int nameProfileInHistory = cursor.getColumnIndex(db.KEY_NAME_PROFILE_IN_HISTORY);
+                int date = cursor.getColumnIndex(db.KEY_DATE);
+
+                arr.add("Дата: " + cursor.getString(date) + "\n" +
+                        "Высота проема: " +  cursor.getString(openingHeight) + "\n" +
+                        "Ширина проема: " + cursor.getString(openingWidth) + "\n" +
+                        "Высота вставки: " + cursor.getString(heightAperture) + "\n" +
+                        "Ширина вставки: " + cursor.getString(widthAperture) + "\n" +
+                        "Количество дверей: " + cursor.getString(countDoors) + "\n" +
+                        "Количество перехлестов: " + cursor.getString(countOverlap) + "\n" +
+                        "Название профиля: " + cursor.getString(nameProfileInHistory));
+
+            } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return n;
+        return arr;
     }
 
     // Метод выборки всех наименований профилей
