@@ -12,7 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by 4 on 17.03.2016.
@@ -43,42 +46,44 @@ public class ShowHistory extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, 1, 0, "Удалить из истории");
         menu.add(0, 2, 0, "Сформировать документ");
+        menu.add(0, 1, 0, "Удалить текущий");
+        menu.add(0, 3, 0, "Удалить все");
+
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        database = db.getWritableDatabase();
         AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()){
             case 1:
-
-                database = db.getWritableDatabase();
                 long n = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).id;//Номер в списке
                 String s = dbListHistory.getItem((int) n);
-
-
-                String date = "";
-                for(int i = 6; i < s.length(); i++){
-                    if(s.charAt(i) == '\n'){
-                        break;
-                    }else{
-                        date += s.charAt(i);
-                    }
+                String date = "'";
+                for(int i = 6; i < 22; i++){
+                    date += s.charAt(i);
                 }
-                Log.d("myLog", date);
-                database.delete(DatabaseHelper.TABLE_HISTORY, "date=" + date, null);
+                date += "'";
+                database.delete(DatabaseHelper.TABLE_HISTORY, "date = " + date, null);
                 dbListHistory.remove(s);
                 dbListHistory.notifyDataSetChanged();
-                database.close();
 
                 break;
+
             case 2:
                 Log.d("myLog", "Сформировать документ");
+                break;
+            case 3:
+                Log.d("myLog", "Удаление всех");
+                database.delete(DatabaseHelper.TABLE_HISTORY, null, null);
+                dbListHistory.clear();
+                dbListHistory.notifyDataSetChanged();
                 break;
             default:
                 break;
         }
+        database.close();
         return super.onContextItemSelected(item);
     }
 }

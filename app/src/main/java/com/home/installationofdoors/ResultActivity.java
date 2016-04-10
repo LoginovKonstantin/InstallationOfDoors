@@ -55,7 +55,7 @@ public class ResultActivity extends AppCompatActivity {
         textViewWidthDoor.setText("Ширина двери: " + MainActivity.calc.getWidth());
         textViewInstHeight.setText("Высота вставки: " + MainActivity.calc.getInsertHeight());
         textViewInstWidth.setText("Ширина вставки: " + MainActivity.calc.getInsertWidth());
-        textViewDefaultFree.setText(MainActivity.calc.getInsertHeight() - 2 + "");
+        textViewDefaultFree.setText(MainActivity.calc.getInsertHeight() + "");
 
         /*определение группы с radiobutton и назначение обработчика событий*/
         radio_group = (RadioGroup)findViewById(R.id.radio_group);
@@ -73,7 +73,7 @@ public class ResultActivity extends AppCompatActivity {
 
                     case R.id.radioButtonFree:
 
-                        value = MainActivity.calc.getInsertHeight() - 2;
+                        value = MainActivity.calc.getInsertHeight();
                         imageView.setImageResource(R.drawable.image2);
                         TextView[] textViews = new TextView[]{new TextView(getApplicationContext())};
                         setGravityColorTextAndAddOnView(textViews, value, linaerForTextView, lparams);

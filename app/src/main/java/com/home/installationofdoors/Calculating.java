@@ -40,8 +40,8 @@ public class Calculating {
     }
 
     public double calcWidthDoor(String widthAperture, String widthProfile, String countOverlaps, String countDoors){
-        return (Double.parseDouble(widthAperture) + (( Double.parseDouble(widthProfile)
-                * Double.parseDouble(countOverlaps)) / Double.parseDouble(countDoors) ))/ Double.parseDouble(countDoors);
+        return (Double.parseDouble(widthAperture) + (Double.parseDouble(widthProfile)
+                * Double.parseDouble(countOverlaps))) / Double.parseDouble(countDoors);
     }
 
     public double calcHeightDoor(String heightAperture, double valueRoller){
@@ -49,7 +49,7 @@ public class Calculating {
     }
 
     public double calcInsertWidth(double width, String s, double valueX, String countDoors){
-        return (width - ((Double.parseDouble(s) - valueX) * 2 )/ Double.parseDouble(countDoors));
+        return width - ((Double.parseDouble(s) - valueX) * 2);
     }
 
     public double calcInsertHeight(double height, double tolerance){
