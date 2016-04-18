@@ -1,5 +1,6 @@
 package com.home.installationofdoors;
 
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -173,6 +174,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("myLog", "Просмотреть историю");
                 break;
             case R.id.aboutProgramm:
+                Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setTitle("О программе");
+                dialog.setContentView(R.layout.activity_about_program);
+                dialog.show();
                 Log.d("myLog", "Просмотр 'о программе'");
                 break;
         }

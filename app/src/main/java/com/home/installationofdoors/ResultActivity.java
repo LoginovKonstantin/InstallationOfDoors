@@ -72,7 +72,6 @@ public class ResultActivity extends AppCompatActivity {
                 switch (checkedId){
 
                     case R.id.radioButtonFree:
-
                         value = MainActivity.calc.getInsertHeight();
                         imageView.setImageResource(R.drawable.image2);
                         TextView[] textViews = new TextView[]{new TextView(getApplicationContext())};
