@@ -1,20 +1,17 @@
 package com.home.installationofdoors;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ActionMenuView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,6 +32,7 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
     private SQLiteDatabase database;
     private Button btnAddProfile;
     private ArrayList<Profile> profilesList;
+    private EditText editTextSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +41,27 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_showdb);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         db = new DatabaseHelper(this);
+
+        /*определение поля для поиска + обработчик событий на текстовое поле для поиска*/
+        editTextSearch = (EditText)findViewById(R.id.editTextSearch);
+        editTextSearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                ShowDBActivity.this.dbList.getFilter().filter(cs);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+
+            }
+        });
 
         /*Определение кнопки добавления*/
         btnAddProfile = (Button)findViewById(R.id.buttonAddProfile);
@@ -58,7 +77,7 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
         /*определение ListView для показа базы данных*/
         listView = (ListView)findViewById(R.id.listView);
         registerForContextMenu(listView);
-        dbList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nameProfileList);
+        dbList = new ArrayAdapter<String>(this, R.layout.list_item_database, R.id.itemFromDataBase, nameProfileList);
         listView.setAdapter(dbList);
     }
 

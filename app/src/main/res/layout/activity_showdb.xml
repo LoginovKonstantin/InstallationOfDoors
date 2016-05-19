@@ -4,6 +4,13 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextSearch"
+        android:inputType="text"
+        android:hint="@string/Search" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="448dp"

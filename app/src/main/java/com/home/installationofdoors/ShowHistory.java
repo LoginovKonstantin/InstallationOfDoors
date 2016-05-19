@@ -46,7 +46,7 @@ public class ShowHistory extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-//        menu.add(0, 2, 0, "Сформировать документ");
+        menu.add(0, 2, 0, "Сформировать документ");
         menu.add(0, 1, 0, "Удалить текущий");
         menu.add(0, 3, 0, "Удалить все");
 
@@ -71,9 +71,18 @@ public class ShowHistory extends AppCompatActivity {
 
                 break;
 
-//            case 2:
-//                Log.d("myLog", "Сформировать документ");
-//                break;
+            case 2:
+                try
+                {
+
+                }
+                catch (Exception e)
+                {
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                }
+                Log.d("myLog", "Сформировать документ");
+                break;
             case 3:
                 Log.d("myLog", "Удаление всех");
                 database.delete(DatabaseHelper.TABLE_HISTORY, null, null);
