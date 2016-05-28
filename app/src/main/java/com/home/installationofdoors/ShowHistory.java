@@ -11,11 +11,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by 4 on 17.03.2016.
@@ -49,13 +51,12 @@ public class ShowHistory extends AppCompatActivity {
         menu.add(0, 2, 0, "Сформировать документ");
         menu.add(0, 1, 0, "Удалить текущий");
         menu.add(0, 3, 0, "Удалить все");
-
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         database = db.getWritableDatabase();
-        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+//        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()){
             case 1:
                 long n = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).id;//Номер в списке
@@ -72,14 +73,10 @@ public class ShowHistory extends AppCompatActivity {
                 break;
 
             case 2:
-                try
-                {
-
-                }
-                catch (Exception e)
-                {
-                    System.out.println(e.getMessage());
-                    e.printStackTrace();
+                if(write()){
+                    Toast.makeText(this, "Файл сохранен...", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "Ошибка...", Toast.LENGTH_SHORT).show();
                 }
                 Log.d("myLog", "Сформировать документ");
                 break;
@@ -95,5 +92,32 @@ public class ShowHistory extends AppCompatActivity {
         database.close();
         return super.onContextItemSelected(item);
     }
+
+    //метод для записи в файл текущей истории вычислений
+    private boolean write() {
+        PrintWriter pw = null;
+        try {
+            pw = new PrintWriter(new OutputStreamWriter(openFileOutput("CurrentHistory.txt", MODE_WORLD_READABLE)));
+            ArrayList<String> listHistoryTemp = db.selectAllHistory(db, database);
+            for(int i = 0; i < listHistoryTemp.size(); i++){
+                for(int j = 0; j < listHistoryTemp.get(i).length() - 1; j++){
+                    if(listHistoryTemp.get(i).charAt(j) >= 'А' && listHistoryTemp.get(i).charAt(j) <= 'Я' &&
+                            listHistoryTemp.get(i).charAt(j + 1) >= 'а' && listHistoryTemp.get(i).charAt(j + 1) <= 'я'){
+                        pw.write("\r\n");
+                    }
+                    pw.write(listHistoryTemp.get(i).charAt(j));
+                }
+                pw.write(listHistoryTemp.get(i).charAt(listHistoryTemp.get(i).length() - 1));
+                pw.write("\r\n\r\n");
+            }
+            pw.close();
+            return true;
+        } catch (IOException e) {
+            Log.d("myTag", e.toString());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
 
