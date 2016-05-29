@@ -3,6 +3,7 @@ package com.home.installationofdoors;
 import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -14,6 +15,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -56,7 +59,6 @@ public class ShowHistory extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         database = db.getWritableDatabase();
-//        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()){
             case 1:
                 long n = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).id;//Номер в списке
@@ -73,11 +75,12 @@ public class ShowHistory extends AppCompatActivity {
                 break;
 
             case 2:
-                if(write()){
-                    Toast.makeText(this, "Файл сохранен...", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this, "Ошибка...", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(this, writeSD(), Toast.LENGTH_SHORT).show();
+//                if(write()){
+//                    Toast.makeText(this, "Файл сохранен...", Toast.LENGTH_SHORT).show();
+//                }else{
+//                    Toast.makeText(this, "Ошибка...", Toast.LENGTH_SHORT).show();
+//                }
                 Log.d("myLog", "Сформировать документ");
                 break;
             case 3:
@@ -94,10 +97,40 @@ public class ShowHistory extends AppCompatActivity {
     }
 
     //метод для записи в файл текущей истории вычислений
-    private boolean write() {
-        PrintWriter pw = null;
+//    private boolean write() {
+//        PrintWriter pw = null;
+//        try {
+//            pw = new PrintWriter(new OutputStreamWriter(openFileOutput("CurrentHistory.txt", MODE_WORLD_READABLE)));
+//            ArrayList<String> listHistoryTemp = db.selectAllHistory(db, database);
+//            for(int i = 0; i < listHistoryTemp.size(); i++){
+//                for(int j = 0; j < listHistoryTemp.get(i).length() - 1; j++){
+//                    if(listHistoryTemp.get(i).charAt(j) >= 'А' && listHistoryTemp.get(i).charAt(j) <= 'Я' &&
+//                            listHistoryTemp.get(i).charAt(j + 1) >= 'а' && listHistoryTemp.get(i).charAt(j + 1) <= 'я'){
+//                        pw.write("\r\n");
+//                    }
+//                    pw.write(listHistoryTemp.get(i).charAt(j));
+//                }
+//                pw.write(listHistoryTemp.get(i).charAt(listHistoryTemp.get(i).length() - 1));
+//                pw.write("\r\n\r\n");
+//            }
+//            pw.close();
+//            return true;
+//        } catch (IOException e) {
+//            Log.d("myTag", e.toString());
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+    private String writeSD() {
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) { return "SD карта не доступна..."; }
+
+        PrintWriter pw;
+        File sdPath = Environment.getExternalStorageDirectory();
+        sdPath = new File(sdPath.getAbsolutePath() + "/Installation of doors");
+        sdPath.mkdirs();
+        File sdFile = new File(sdPath, "CurrentHistory.txt");
         try {
-            pw = new PrintWriter(new OutputStreamWriter(openFileOutput("CurrentHistory.txt", MODE_WORLD_READABLE)));
+            pw = new PrintWriter(sdFile);
             ArrayList<String> listHistoryTemp = db.selectAllHistory(db, database);
             for(int i = 0; i < listHistoryTemp.size(); i++){
                 for(int j = 0; j < listHistoryTemp.get(i).length() - 1; j++){
@@ -111,11 +144,10 @@ public class ShowHistory extends AppCompatActivity {
                 pw.write("\r\n\r\n");
             }
             pw.close();
-            return true;
+            return "Файл сохранен...";
         } catch (IOException e) {
-            Log.d("myTag", e.toString());
             e.printStackTrace();
-            return false;
+            return "Ошибка...";
         }
     }
 

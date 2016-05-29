@@ -98,7 +98,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<String> arr = new ArrayList<String>();
         if (cursor.moveToFirst()) {
             do {
-//                int idHistory = cursor.getColumnIndex(db.KEY_ID_HISTORY);
                 int openingHeight = cursor.getColumnIndex(db.KEY_OPENING_HEIGHT);
                 int openingWidth = cursor.getColumnIndex(db.KEY_OPENING_WIDTH);
                 int heightAperture = cursor.getColumnIndex(db.KEY_HEIGHT_APERTURE);

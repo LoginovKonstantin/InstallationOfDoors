@@ -197,7 +197,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String nameProfile = parent.getItemAtPosition(position).toString();
         double width = db.getWidth(nameProfile, db);
         widthProfile.setText(width + "");
-
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.home.installationofdoors;
 
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -45,22 +47,14 @@ public class ShowDBActivity extends AppCompatActivity implements View.OnClickLis
         /*определение поля для поиска + обработчик событий на текстовое поле для поиска*/
         editTextSearch = (EditText)findViewById(R.id.editTextSearch);
         editTextSearch.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                // When user changed the Text
                 ShowDBActivity.this.dbList.getFilter().filter(cs);
             }
-
             @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                          int arg3) {
-            }
-
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {  }
             @Override
-            public void afterTextChanged(Editable arg0) {
-
-            }
+            public void afterTextChanged(Editable arg0) { }
         });
 
         /*Определение кнопки добавления*/
