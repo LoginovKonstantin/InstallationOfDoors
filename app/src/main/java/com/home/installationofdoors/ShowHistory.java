@@ -71,16 +71,9 @@ public class ShowHistory extends AppCompatActivity {
                 database.delete(DatabaseHelper.TABLE_HISTORY, "date = " + date, null);
                 dbListHistory.remove(s);
                 dbListHistory.notifyDataSetChanged();
-
                 break;
-
             case 2:
                 Toast.makeText(this, writeSD(), Toast.LENGTH_SHORT).show();
-//                if(write()){
-//                    Toast.makeText(this, "Файл сохранен...", Toast.LENGTH_SHORT).show();
-//                }else{
-//                    Toast.makeText(this, "Ошибка...", Toast.LENGTH_SHORT).show();
-//                }
                 Log.d("myLog", "Сформировать документ");
                 break;
             case 3:
@@ -96,34 +89,9 @@ public class ShowHistory extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 
-    //метод для записи в файл текущей истории вычислений
-//    private boolean write() {
-//        PrintWriter pw = null;
-//        try {
-//            pw = new PrintWriter(new OutputStreamWriter(openFileOutput("CurrentHistory.txt", MODE_WORLD_READABLE)));
-//            ArrayList<String> listHistoryTemp = db.selectAllHistory(db, database);
-//            for(int i = 0; i < listHistoryTemp.size(); i++){
-//                for(int j = 0; j < listHistoryTemp.get(i).length() - 1; j++){
-//                    if(listHistoryTemp.get(i).charAt(j) >= 'А' && listHistoryTemp.get(i).charAt(j) <= 'Я' &&
-//                            listHistoryTemp.get(i).charAt(j + 1) >= 'а' && listHistoryTemp.get(i).charAt(j + 1) <= 'я'){
-//                        pw.write("\r\n");
-//                    }
-//                    pw.write(listHistoryTemp.get(i).charAt(j));
-//                }
-//                pw.write(listHistoryTemp.get(i).charAt(listHistoryTemp.get(i).length() - 1));
-//                pw.write("\r\n\r\n");
-//            }
-//            pw.close();
-//            return true;
-//        } catch (IOException e) {
-//            Log.d("myTag", e.toString());
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
+    //метод для записи в файл истории вычислений
     private String writeSD() {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) { return "SD карта не доступна..."; }
-
         PrintWriter pw;
         File sdPath = Environment.getExternalStorageDirectory();
         sdPath = new File(sdPath.getAbsolutePath() + "/Installation of doors");
